@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SecureFaces - Facial Authentication Software</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Home_styles.css') }}">
+        <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Maven Pro' rel='stylesheet'>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="header-left">
+                    <img src="{{url_for('static', filename='images/SecureFaces.png')}}" alt="Logo" style="height: 115px; width: 115px;"/>
+                </div>
+                <div>
+                    <h1>SecureFaces</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="{{ url_for('home') }}" class="active">Home</a></li>
+                            <li><a href="{{ url_for('features') }}">Features</a></li>
+                            <li><a href="#" id="admin-link">Admin</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <section id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h2>Prevent DeepFakes with SecureFaces</h2>
+                        <p>Our facial authentication software detects and prevents DeepFakes from accessing your system.</p>
+                        <a href="{{ url_for('signup') }}" class="btn">Sign-Up</a>
+                        <a href="#" class="btn" onclick="openModelForm()">Login</a>
+                    </div>
+                    <div class="hero-image">
+                        <img src="{{url_for('static', filename='images/facial-recognition.jpg')}}" alt="Facial Recognition"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h2>About SecureFaces</h2>
+                <p>SecureFaces is an advanced facial authentication software designed to protect your system from unauthorized access by DeepFakes.</p>
+                <h2>Features</h2>
+                <ul>
+                    <li>Real-time facial recognition</li>
+                    <li>DeepFake detection</li>
+                    <li>User-friendly interface</li>
+                    <li>Customizable security settings</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Admin Login Form-->
+        <div id="login-popup" class="login-popup">
+            <form action="{{ url_for('admin_login') }}" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br><br>
+                <button type="submit">Login</button>
+                <button id="close-button" type="button">Close</button>
+            </form>
+        </div>
+
+        <!-- The model selection form -->
+        <div id="modelForm" class="modal">
+            <form class="modal-content" action="{{ url_for('login') }}" method="GET">
+            <div class="container">
+                <h2>Choose Model</h2>
+                <p>Select the model you want to use for facial authentication:</p>
+                <label>
+                <input type="radio" name="model" value="MesoNet" checked>
+                    MesoNet - Fast and efficient, but may sacrifice some accuracy.
+                </label>
+                <label>
+                <input type="radio" name="model" value="ResNetLSTM">
+                    ResNetLSTM - Somewhat slow but highly accurate.
+                </label>
+                <div class="clearfix">
+                <button type="button" onclick="closeModelForm()">Cancel</button>
+                <button type="submit" class="loginbtn">Proceed</button>
+                </div>
+            </div>
+            </form>
+        </div>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 SecureFaces. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var adminLink = document.getElementById('admin-link');
+                var loginPopup = document.getElementById('login-popup');
+                var closeButton = document.getElementById('close-button');
+
+                adminLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    loginPopup.style.display = 'block';
+                });
+
+                closeButton.addEventListener('click', function() {
+                    loginPopup.style.display = 'none';
+                });
+            });
+
+            // Function to open the model selection form
+            function openModelForm() {
+            document.getElementById("modelForm").style.display = "block";
+            }
+
+            // Function to close the model selection form
+            function closeModelForm() {
+            document.getElementById("modelForm").style.display = "none";
+        }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login - SecureFaces</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Login_Signup_styles.css') }}">
+        <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Maven Pro' rel='stylesheet'>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>SecureFaces Login</h1>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        
+        <div class="container">
+            <h2>Login to SecureFaces</h2>
+            <form id="loginForm" action="{{ url_for('login_process') }}" enctype="multipart/form-data" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="upload-option">Choose an option:</label>
+                    <select id="upload-option" name="upload-option" onchange="toggleUploadMethod()">
+                        <option value="upload">Upload Picture</option>
+                        <option value="camera">Launch Camera</option>
+                    </select>
+                </div>
+                <div id="modelSelection">
+                    <!-- This div will be dynamically populated based on the chosen model -->
+                </div>
+                <button type="submit" onclick="login()">Login</button>
+            </form>
+        </div>
+
+        <script>
+            // Function to dynamically generate form fields based on the chosen model
+            function generateModelFields() {
+                var modelSelectionDiv = document.getElementById("modelSelection");
+                var chosenModel = '{{ chosen_model }}';
+                var modelFieldsHTML = '';
+    
+                // Check the chosen model and generate the corresponding form fields
+                if (chosenModel === 'MesoNet') {
+                    modelFieldsHTML = `
+                        <div id="upload-section">
+                            <label for="face-image">Upload Your Face:</label>
+                            <input type="file" id="face-image" name="face-image" accept="image/*" required>
+                        </div>
+                        <div class="form-group">
+                            <div id="camera-section" style="display: none;">
+                                <p>Please position your face towards the camera</p>
+                                <button type="button" id="start-stop">Launch camera</button>
+                                <img id="camera" height="50%">
+                                <p id="notify" style="display: none;"> Face Captured</p>
+                                <button type="button" id="capture-image">Capture</button>
+                            </div>
+                        </div>`;
+                } else if (chosenModel === 'ResNetLSTM') {
+                    modelFieldsHTML = `
+                        <div id="upload-section">
+                            <label for="face-video">Upload Your Face:</label>
+                            <input type="file" id="face-video" name="face-video" accept="video/*" required>
+                        </div>
+                        <div class="form-group">
+                            <div id="camera-section" style="display: none;">
+                                <p>Please position your face towards the camera</p>
+                                <button type="button" id="start-stop">Launch camera</button>
+                                <img id="camera" height="50%">
+                                <p id="notify" style="display: none;">Face Video Captured</p>
+                                <button type="button" id="capture-video">Capture</button>
+                            </div>
+                        </div>`;
+                }
+
+                // Insert the generated form fields into the modelSelectionDiv
+                modelSelectionDiv.innerHTML = modelFieldsHTML;
+            }
+            // Call the function to generate form fields when the page loads
+            window.onload = generateModelFields;
+
+            function toggleUploadMethod() {
+                var uploadOption = document.getElementById("upload-option").value;
+                var uploadSection = document.getElementById("upload-section");
+                var cameraSection = document.getElementById("camera-section");
+
+                if (uploadOption === "upload") {
+                    uploadSection.style.display = "block";
+                    cameraSection.style.display = "none";
+                } else {
+                    uploadSection.style.display = "none";
+                    cameraSection.style.display = "block";
+                }
+            }
+            document.addEventListener("DOMContentLoaded", function() {
+                // Attach event listeners to the document and use event delegation
+                document.addEventListener("click", function(event) {
+                    var target = event.target;
+                    if (target.id === "capture-image") {
+                        fetch('/trigger?action=image')
+                            .then(response => response.json())
+                            .then(data => {
+                                document.getElementById("notify").style.display = "block";
+                            })
+                            .catch(error => console.error('Error:', error));
+                    } else if (target.id === "capture-video") {
+                        fetch('/trigger?action=video')
+                            .then(response => response.json())
+                            .then(data => {
+                                document.getElementById("notify").style.display = "block";
+                            })
+                            .catch(error => console.error('Error:', error));
+                    } else if (target.id === "start-stop") {
+                        fetch('/start_stop')
+                            .then(response => response.json())
+                            .then(data => {
+                                document.getElementById("camera-section").style.display = "block";
+                                document.getElementById("camera").src = "{{ url_for('video_feed') }}";
+                            })
+                            .catch(error => console.error('Error:', error));
+                    }
+                });
+            });
+
+            function login() {
+                // Submit the form
+                document.getElementById("loginForm").submit();
+            }
+        </script>
+    </body>
+</html>

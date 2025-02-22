@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SecureFaces - Features</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Features_styles.css') }}">
+            <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+            <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
+            <link href='https://fonts.googleapis.com/css?family=Maven Pro' rel='stylesheet'>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>SecureFaces</h1>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                        <li><a href="{{ url_for('features') }}" class="active">Features</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section id="features">
+            <div class="container">
+                <h2>Project Overview</h2>
+                <p>SecureFaces is a facial authentication system that enhances cybersecurity by incorporating a Deepfake detection feature. The system utilizes two models, MesoNet and ResNetLSTM, for authentication based on user requirements. If speed is the priority, MesoNet is used, while if accuracy is important, ResNetLSTM is employed.</p>
+                <p>The system stores users' facial data in MongoDB for authentication purposes.</p>
+            </div>
+        </section>
+
+        <section id="overview">
+            <div class="container">
+                <h2>Deepfakes</h2>
+                <p>Deepfakes are manipulated media that use artificial intelligence and machine learning techniques to create fake videos or images, often depicting people saying or doing things they never did. These fake videos pose a significant threat to cybersecurity and can be used for various malicious purposes, including spreading disinformation, blackmail, and impersonation.</p>
+                <div class="image">
+                    <img src="{{url_for('static', filename='images/Deepfakes.png')}}" alt="Deepfake images">
+                </div>
+                <p>SecureFaces is a facial authentication system designed to combat the threat of Deepfakes. By incorporating advanced deepfake detection features alongside traditional facial recognition, SecureFaces provides robust security against impersonation attacks and ensures the authenticity of user identities.</p>
+            </div>
+        </section>
+
+        <section id="workflow">
+            <div class="container">
+                <h2>User Workflow</h2>
+                <ol>
+                    <li><strong>Signup:</strong> Users create an account by providing a username and capturing a picture of their face. The face image is processed using the face_recognition module, and the user's username and face encodings are stored in MongoDB.</li>
+                    <li><strong>Signin:</strong> Users choose the authentication model (MesoNet or ResNetLSTM) and upload a video of themselves for authentication. The video is processed by the face_recognition module, comparing the face encodings with those stored in the database. Additionally, the video is analyzed for deepfake indicators using the chosen model.</li>
+                    <li>If the face encodings match and no deepfake is detected, the user is successfully authenticated and granted access.</li>
+                    <li>If a deepfake is detected, the login attempt is denied, and appropriate security measures are taken.</li>
+                </ol>
+                <div class="image">
+                    <img src="{{url_for('static', filename='images/System_architecture.png')}}" alt="Workflow diagram">
+                </div>
+            </div>
+        </section>
+
+        <section id="models">
+            <div class="container">
+                <h2>Available Models</h2>
+                <p>SecureFaces offers two models for authentication:</p>
+                <ul>
+                    <li><strong>MesoNet:</strong> A model optimized for speed.</li>
+                    <li><strong>ResNetLSTM:</strong> A model optimized for accuracy.</li>
+                </ul>
+                <p>Users can choose the model based on their specific requirements.</p>
+            </div>
+        </section>
+
+        <section id="mesonet">
+            <div class="container">
+                <h2>MesoNet</h2>
+                <p>MesoNet is an image-based facial recognition system known for its speed and efficiency. It achieves an accuracy rate of 89.6%, making it suitable for applications where quick authentication is essential.</p>
+                <p>The architecture of MesoNet consists of a lightweight convolutional neural network (CNN) that extracts features from facial images. These features are then passed through a series of layers for classification. Despite its simplicity, MesoNet demonstrates impressive performance in detecting and authenticating faces.</p>
+                <p>Additional features of MesoNet:</p>
+                <ul>
+                    <li>Low computational complexity</li>
+                    <li>Real-time processing capabilities</li>
+                    <li>Robustness against various facial expressions and lighting conditions</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="resnetlstm">
+            <div class="container">
+                <h2>ResNetLSTM</h2>
+                <p>ResNetLSTM is a video-based facial recognition system that offers high accuracy rates across three categories: 20 frames accuracy: 90%, 40 frames accuracy: 95%, and 60 frames accuracy: 97%. This model is designed to provide superior authentication accuracy, making it suitable for applications where security is paramount.</p>
+                <p>The architecture of ResNetLSTM combines the power of residual neural networks (ResNet) with long short-term memory (LSTM) networks. ResNet is used for feature extraction from video frames, while LSTM captures temporal dependencies in facial motion over time. This combination allows ResNetLSTM to effectively distinguish genuine faces from deepfake or manipulated videos.</p>
+                <p>Additional features of ResNetLSTM:</p>
+                <ul>
+                    <li>Adaptive learning capabilities to detect evolving deepfake techniques</li>
+                    <li>Highly accurate authentication even in challenging scenarios</li>
+                    <li>Scalability to process videos of varying lengths</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 SecureFaces. All rights reserved.</p>
+            </div>
+        </footer>
+    </body>
+</html>

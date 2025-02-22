@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Signup - SecureFaces</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Login_Signup_styles.css') }}">
+        <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Maven Pro' rel='stylesheet'>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>SecureFaces Signup</h1>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section id="signup">
+            <div class="container">
+                <h2>Register</h2>
+                <form id="signup-form" action="{{ url_for('signup') }}" method="post" enctype="multipart/form-data">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+
+                    <label for="upload-option">Choose an option:</label>
+                    <select id="upload-option" name="upload-option" onchange="toggleUploadMethod()">
+                        <option value="upload">Upload Picture</option>
+                        <option value="camera">Launch Camera</option>
+                    </select>
+
+                    <div id="upload-section">
+                        <label for="face-image">Upload Your Face:</label>
+                        <input type="file" id="face-image" name="face-image" accept="image/*" required>
+                    </div>
+
+                    <div id="camera-section" style="display: none;">
+                        <p>Please position your face towards the camera</p>
+                        <button type="button" id="start-stop">Start capturing</button>
+                        <img id="camera" height="50%">
+                        <p id="notify" style="display: none;"> Face Captured</p>
+                        <button type="button" id="capture-image">Capture</button>
+                    </div>
+
+                    <button type="submit" class="btn" onclick="register_user()">Register</button>
+                </form>
+            </div>
+        </section>
+
+        <script>
+            // Access the camera only when the camera option is chosen
+            function toggleUploadMethod() {
+                var uploadOption = document.getElementById("upload-option").value;
+                var uploadSection = document.getElementById("upload-section");
+                var cameraSection = document.getElementById("camera-section");
+
+                if (uploadOption === "upload") {
+                    uploadSection.style.display = "block";
+                    cameraSection.style.display = "none";
+                } else {
+                    uploadSection.style.display = "none";
+                    cameraSection.style.display = "block";
+                }
+            }
+            
+            document.getElementById("capture-image").addEventListener("click", function() {
+                fetch('/trigger?action=image') // Sending request to backend
+                    .then(response => response.json())
+                    .then(data => {
+                        // Once response is received, activate the camera section
+                        document.getElementById("notify").style.display = "block";})
+                    .catch(error => console.error('Error:', error));
+            });
+
+            document.getElementById("start-stop").addEventListener("click", function() {
+                fetch('/start_stop') // Sending request to backend
+                    .then(response => response.json())
+                    .then(data => {
+                        // Once response is received, activate the camera section
+                        document.getElementById("camera-section").style.display = "block";
+                        document.getElementById("camera").src = "{{ url_for('video_feed') }}";})
+                    .catch(error => console.error('Error:', error));
+            });
+
+            function register_user() {
+                // Submit the form
+                document.getElementById("signup-form").submit();
+            }
+        </script>
+    </body>
+</html>

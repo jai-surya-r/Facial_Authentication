@@ -1,0 +1,200 @@
+body {
+    font-family: 'Maven Pro';
+    font-size: 17px;
+    letter-spacing: 0.7px;
+    margin: 0;
+    padding: 0;
+    background-color: #BECDEE; /* Light blue background */
+}
+
+.header-left {
+    float: right;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: #241930; /* Dark blue header */
+    color: #fff;
+    padding: 10px 0;
+}
+
+header h1 {
+    font-family: 'Acme';
+    font-size: 50px;
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.container a {
+    font-family: 'Itim';
+    font-size: 20px;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 5px;
+}
+
+.container a.active {
+    background-color: #8EA9E2;
+    color: black;
+}
+
+.container a:hover {
+    background-color: #8EA9E2;
+    color: black;
+}
+
+#hero {
+    background: #6D7DB5;
+}
+
+#hero .hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#hero .hero-text {
+    flex: 1;
+    color: #fff; /* White text color */
+}
+
+#hero .hero-image {
+    flex: 1;
+    text-align: right;
+}
+
+#hero .hero-image img {
+    max-width: 100%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width: 70%;
+}
+
+footer {
+    background: #232130; /* Dark blue footer */
+    color: #fff;
+    text-align: center;
+    height: min-content;
+}
+
+.btn {
+    display: inline-block;
+    background: #2B3C7E; /* Blue button */
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #484C9B; /* Darker blue on hover */
+}
+
+/* Style for login popup */
+.login-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    display: none;
+}
+
+/* Style the model selection form */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px; /* Rounded corners */
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the radio button options */
+label {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the cancel and proceed buttons */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+button {
+    font-family: 'Maven Pro';
+    float: left;
+    width: 45%;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    background-color: #2B3C7E;
+    margin: 10px;
+    color: white;
+}
+
+button[type="button"] {
+    background-color: #ccc;
+    margin: 10px;
+    color: black;
+}
+
+button:hover {
+    background-color: #484C9B;
+}
+
+button[type="button"]:hover {
+    background-color: #aaa;
+}

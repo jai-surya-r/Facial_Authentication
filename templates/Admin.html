@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Page</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Admin_styles.css') }}">
+        <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Maven Pro' rel='stylesheet'>
+    </head>
+
+    <body>
+        <header>
+            <div class="container">
+                <div class="header-left">
+                    <img src="{{url_for('static', filename='images/SecureFaces.png')}}" alt="Logo" style="height: 115px; width: 115px;"/>
+                </div>
+                <div>
+                    <h1>SecureFaces</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="{{ url_for('admin_login') }}" class="active">Admin</a></li>
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <h2>User Records</h2>
+            <table>
+                <tr>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Delete</th>
+                </tr>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.user_id }}</td>
+                    <td>{{ record.name }}</td>
+                    <td><button class="delete-btn" onclick="deleteUser('{{ record.name }}')">Delete</button></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+
+        <script>
+            function deleteUser(name) {
+                if (confirm("Are you sure you want to delete the user '" + name + "'?")) {
+                    // Send an AJAX request to delete the user
+                    fetch('/delete_user', {
+                        method: 'POST',
+                        body: JSON.stringify({ name: name }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            // Reload the page to reflect changes
+                            location.reload();
+                        } else {
+                            alert('Failed to delete user.');
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again later.');
+                    });
+                }
+            }
+        </script>
+    </body>
+</html>

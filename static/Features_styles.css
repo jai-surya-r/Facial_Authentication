@@ -1,0 +1,99 @@
+body {
+    font-family: 'Maven Pro';
+    font-size: 17px;
+    letter-spacing: 0.7px;
+    margin: 0;
+    padding: 0;
+    background-color: #BECDEE; /* Light blue background */
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+img {
+    max-width: 100%;
+    border-radius: 10px;
+    width: 70%;
+    height: 70%;
+}
+
+.image {
+    text-align: center;
+}
+
+p {
+    line-height: 25px;
+}
+
+header {
+    background: #241930; /* Dark blue header */
+    color: #fff;
+    padding: 10px 0;
+}
+
+header h1 {
+    font-family: 'Acme';
+    font-size: 50px;
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.container a {
+    font-family: 'Itim';
+    font-size: 20px;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 5px;
+}
+
+.container a.active {
+    background-color: #8EA9E2;
+    color: black;
+}
+
+.container a:hover {
+    background-color: #8EA9E2;
+    color: black;
+}
+
+footer {
+    background: #232130; /* Dark blue footer */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.btn {
+    display: inline-block;
+    background: #2B3C7E; /* Blue button */
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #484C9B; /* Darker blue on hover */
+}
